@@ -134,7 +134,7 @@ test('home page', async ({ page }) => {
   expect(await page.title()).toBe('JWT Pizza');
 });
 test('About, History, Docs, Not Found and Not Logged in Franchise', async ({ page }) => {
-  await page.goto('http://localhost:5173/');
+  await page.goto('/');
   await page.getByText('JWT Pizza', { exact: true }).click();
   await page.getByRole('contentinfo').getByRole('link', { name: 'Franchise' }).click();
   await expect(page.getByRole('main')).toContainText('So you want a piece of the pie?');
@@ -142,10 +142,10 @@ test('About, History, Docs, Not Found and Not Logged in Franchise', async ({ pag
   await expect(page.getByRole('main')).toContainText('The secret sauce');
   await page.getByRole('link', { name: 'History' }).click();
   await expect(page.getByRole('heading')).toContainText('Mama Rucci, my my');
-  await page.goto('http://localhost:5173/docs');
+  await page.goto('/docs');
   await expect(page.getByRole('main')).toContainText('JWT Pizza API');
   await expect(page.getByRole('main')).toContainText('🔐 [POST] /api/franchise/:franchiseId/store');
-  await page.goto('http://localhost:5173/testing');
+  await page.goto('/testing');
   await expect(page.getByRole('heading')).toContainText('Oops');
 });
 test('register', async ({ page }) => {
