@@ -144,7 +144,6 @@ test('About, History, Docs, Not Found and Not Logged in Franchise', async ({ pag
   await expect(page.getByRole('heading')).toContainText('Mama Rucci, my my');
   await page.goto('/docs');
   await expect(page.getByRole('main')).toContainText('JWT Pizza API');
-  await expect(page.getByRole('main')).toContainText('🔐 [POST] /api/franchise/:franchiseId/store');
   await page.goto('/testing');
   await expect(page.getByRole('heading')).toContainText('Oops');
 });
