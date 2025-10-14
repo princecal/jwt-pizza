@@ -97,6 +97,12 @@ test('login', async ({ page }) => {
   await expect(page.getByRole('link', { name: 'KC' })).toBeVisible();
 });
 
+test('deliveryFail', async ({page}) => {
+await page.goto('http://localhost:5173/delivery');
+await expect(page.getByText('VerifyOrder moreorder ID: pie')).toBeVisible();
+await expect(page.getByText('error', { exact: true })).toBeVisible();
+});
+
 test('purchase with login', async ({ page }) => {
   await basicInit(page);
 
@@ -128,6 +134,7 @@ test('purchase with login', async ({ page }) => {
   // Check balance
   await expect(page.getByText('0.008')).toBeVisible();
 });
+
 test('home page', async ({ page }) => {
   await page.goto('/');
 
