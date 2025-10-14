@@ -1,4 +1,5 @@
 import { test, expect } from 'playwright-test-coverage';
+import { Page } from '@playwright/test';
 
 test('updateUser', async ({ page }) => {
     const email = `user${Math.floor(Math.random() * 10000)}@jwt.com`;
@@ -39,6 +40,91 @@ test('updateUser', async ({ page }) => {
     await expect(page.getByRole('main')).toContainText('pizza dinerx');
 });
 
+
+async function franchiseInit(page:Page){
+    await page.route('*/**/api/auth', async (route) => {
+        expect(route.request().method()).toBe('PUT');
+        await route.fulfill({json: {
+  "user": {
+    "id": 3,
+    "name": "pizza franchisee",
+    "email": "f@jwt.com",
+    "roles": [
+      {
+        "role": "diner"
+      },
+      {
+        "objectId": 1,
+        "role": "franchisee"
+      }
+    ]
+  },
+  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywibmFtZSI6InBpenphIGZyYW5jaGlzZWUiLCJlbWFpbCI6ImZAand0LmNvbSIsInJvbGVzIjpbeyJyb2xlIjoiZGluZXIifSx7Im9iamVjdElkIjoxLCJyb2xlIjoiZnJhbmNoaXNlZSJ9XSwiaWF0IjoxNzYwNDUzNTg0fQ.Pl9kEnndmlAKm8uuXEcZZLsPvzbETK__Yqxa6tcjVnQ"
+}})
+});
+    await page.route('*/**/api/auth', async (route) => {
+        expect(route.request().method()).toBe('PUT');
+        await route.fulfill({json: {
+  "user": {
+    "id": 3,
+    "name": "pizza franchisee",
+    "email": "f@jwt.com",
+    "roles": [
+      {
+        "role": "diner"
+      },
+      {
+        "objectId": 1,
+        "role": "franchisee"
+      }
+    ]
+  },
+  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywibmFtZSI6InBpenphIGZyYW5jaGlzZWUiLCJlbWFpbCI6ImZAand0LmNvbSIsInJvbGVzIjpbeyJyb2xlIjoiZGluZXIifSx7Im9iamVjdElkIjoxLCJyb2xlIjoiZnJhbmNoaXNlZSJ9XSwiaWF0IjoxNzYwNDUzNTg0fQ.Pl9kEnndmlAKm8uuXEcZZLsPvzbETK__Yqxa6tcjVnQ"
+}})
+});
+
+await page.route('*/**/api/franchise/3', async (route) => {
+        expect(route.request().method()).toBe('GET');
+        await route.fulfill({json: [
+  {
+    "id": 1,
+    "name": "pizzaPocket",
+    "admins": [
+      {
+        "id": 3,
+        "name": "pizza franchisee",
+        "email": "f@jwt.com"
+      }
+    ],
+    "stores": [
+      {
+        "id": 1,
+        "name": "SLC",
+        "totalRevenue": 0
+      }
+    ]
+  }
+]})
+});
+await page.route('*/**/api/user/me', async (route) => {
+        expect(route.request().method()).toBe('GET');
+        await route.fulfill({json: {
+  "id": 3,
+  "name": "pizza franchisee",
+  "email": "f@jwt.com",
+  "roles": [
+    {
+      "role": "diner"
+    },
+    {
+      "objectId": 1,
+      "role": "franchisee"
+    }
+  ],
+  "iat": 1760453584
+}})
+});
+}
 test('login Franchise User', async ({ page }) => {
     await page.goto('/');
     await page.getByRole('link', { name: 'Login' }).click();
