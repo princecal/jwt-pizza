@@ -97,11 +97,7 @@ test('login', async ({ page }) => {
   await expect(page.getByRole('link', { name: 'KC' })).toBeVisible();
 });
 
-test('deliveryFail', async ({page}) => {
-await page.goto('http://localhost:5173/delivery');
-await expect(page.getByText('VerifyOrder moreorder ID: pie')).toBeVisible();
-await expect(page.getByText('error', { exact: true })).toBeVisible();
-});
+
 
 test('purchase with login', async ({ page }) => {
   await basicInit(page);
@@ -486,4 +482,10 @@ test('admin', async ({ page }) => {
   await page.getByRole('button', { name: 'Close' }).click();
   await expect(page.getByRole('main')).not.toContainText('test');
   await page.getByRole('link', { name: 'Logout' }).click();
+});
+
+test('deliveryFail', async ({page}) => {
+await page.goto('http://localhost:5173/delivery');
+await expect(page.getByText('VerifyOrder moreorder ID: pie')).toBeVisible();
+await expect(page.getByText('error', { exact: true })).toBeVisible();
 });
