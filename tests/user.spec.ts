@@ -38,3 +38,26 @@ test('updateUser', async ({ page }) => {
 
     await expect(page.getByRole('main')).toContainText('pizza dinerx');
 });
+
+test('login Franchise User', async ({ page }) => {
+    await page.goto('/');
+    await page.getByRole('link', { name: 'Login' }).click();
+    
+   
+    await page.getByRole('textbox', { name: 'Email address' }).fill('f@jwt.com');
+    await page.getByRole('textbox', { name: 'Password' }).click();
+    await page.getByRole('textbox', { name: 'Password' }).fill('franchisee');
+    await page.getByRole('textbox', { name: 'Password' }).press('Enter');
+    await page.getByRole('button', { name: 'Login' }).click();
+    await expect(page.getByLabel('Global').getByRole('link', { name: 'Franchise' })).toBeVisible();
+    await page.getByLabel('Global').getByRole('link', { name: 'Franchise' }).click();
+    await page.goto('/franchise-dashboard')
+    await page.waitForTimeout(1000);
+    await expect(page.getByText('Everything you need to run an')).toBeVisible();
+    await expect(page.getByText('pizzaPocket')).toBeVisible();
+    await page.getByRole('link', { name: 'Logout' }).click();
+    
+});
+
+
+
