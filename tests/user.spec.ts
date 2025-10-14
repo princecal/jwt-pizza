@@ -126,6 +126,7 @@ await page.route('*/**/api/user/me', async (route) => {
 });
 }
 test('login Franchise User', async ({ page }) => {
+    await franchiseInit(page);
     await page.goto('/');
     await page.getByRole('link', { name: 'Login' }).click();
     
