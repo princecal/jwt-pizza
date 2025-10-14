@@ -97,8 +97,6 @@ test('login', async ({ page }) => {
   await expect(page.getByRole('link', { name: 'KC' })).toBeVisible();
 });
 
-
-
 test('purchase with login', async ({ page }) => {
   await basicInit(page);
 
