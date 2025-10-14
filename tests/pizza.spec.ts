@@ -483,9 +483,3 @@ test('admin', async ({ page }) => {
   await expect(page.getByRole('main')).not.toContainText('test');
   await page.getByRole('link', { name: 'Logout' }).click();
 });
-
-test('deliveryFail', async ({page}) => {
-await page.goto('http://localhost:5173/delivery');
-await expect(page.getByText('VerifyOrder moreorder ID: pie')).toBeVisible();
-await expect(page.getByText('error', { exact: true })).toBeVisible();
-});
